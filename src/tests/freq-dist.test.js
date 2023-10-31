@@ -1,6 +1,6 @@
 const groupToFreqDistTable = require('../freq-dist.js');
 
-it('frequency dist table', () => {
+it('test ungrouped frequency dist table', () => {
   const dataSet = [72, 94, 86, 71, 85, 87, 92, 79, 93, 82, 92, 70];
   const classNumber = 5;
   const result = groupToFreqDistTable(dataSet, classNumber);
@@ -24,3 +24,5 @@ it('frequency dist table', () => {
     expect(result.classFrequency).toEqual([3, 1, 1, 3, 4]);
     expect(result.relativeFrequency).toEqual([0.25, 0.083, 0.083, 0.25, 0.333]);
 });
+
+

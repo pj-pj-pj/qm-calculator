@@ -10,6 +10,7 @@ function getClassIntervals(dataSet, classNumber) {
   return ci;
 }
 
+// ungrouped
 function groupToFreqDistTable(dataSet, classNumber) {
   dataSet.sort((a, b) => a - b);
   const fTable = {};
