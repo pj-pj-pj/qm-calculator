@@ -1,0 +1,1 @@
+(()=>{const n=document.querySelector("nav #nav-button"),e=document.querySelector("aside");function t(c){e.contains(c.target)||n.contains(c.target)||e.classList.contains("hidden")||(e.classList.add("hidden"),window.removeEventListener("click",t))}n.onclick=()=>{e.classList.toggle("hidden"),window.addEventListener("click",t)}})();
