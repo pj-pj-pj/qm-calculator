@@ -1,3 +1,6 @@
+/* eslint-disable import/no-cycle */
+import fdtuUIinit from './freq-dist-ui';
+
 // for the responsive sidebar, show on click then hide
 const menuBtn = document.querySelector('nav #nav-button');
 const sidebar = document.querySelector('aside');
@@ -23,11 +26,14 @@ const siteLogo = document.querySelector('header img');
 const main = document.querySelector('main');
 const sidebarsBtn = document.querySelectorAll('aside button');
 
-function unchild(parent) {
-  let child = parent.firstChild;
-  while (child) {
-    child.remove();
-    child = parent.firstChild;
+// eslint-disable-next-line import/prefer-default-export
+export function unchild(parent) {
+  if (parent) {
+    let child = parent.firstChild;
+    while (child) {
+      child.remove();
+      child = parent.firstChild;
+    }
   }
 }
 
@@ -42,3 +48,9 @@ sidebarsBtn.forEach((btn) => {
   });
 });
 //
+
+sidebarsBtn[0].addEventListener('click', fdtuUIinit);
+
+// DELETE LATER!!!
+unchild(main);
+fdtuUIinit();
