@@ -15,7 +15,6 @@
 	margin: 0;
 	padding: 0;
 	box-sizing: border-box;
-	user-select: none;
 }
 
 html {
@@ -105,7 +104,7 @@ aside {
 
 	padding: 45px 25px;
 	height: 100%;
-	margin-right: 60px;
+	margin-right: 50%;
 }
 
 aside h4 {
@@ -127,6 +126,7 @@ main {
 	font-family: inherit;
 	padding: 25px 0;
 	margin: 0 auto;
+	width: 100%;
 }
 
 main,
@@ -161,6 +161,110 @@ main h3 {
 	font-weight: normal;
 }
 
+/* FREQ-DIST-UNGROUPED */
+#frq-dist-u-form {
+	display: grid;
+
+	gap: 8px;
+	margin: 30px 0;
+	align-items: center;
+}
+
+#frq-dist-u-form label:first-child input {
+	width: 100%;
+}
+
+#frq-dist-u-form label:nth-child(2) input {
+	width: 30px;
+	text-align: center;
+	margin-left: 5px;
+}
+
+#frq-dist-u-form label:nth-child(3),
+#frq-dist-u-form label:nth-child(4) {
+	width: 100px;
+}
+
+#frq-dist-u-form input {
+	padding: 3px 4px;
+	border-radius: 2px;
+	border: 1px solid var(--border-color);
+}
+
+#frq-dist-u-form input:hover {
+	border-color: var(--border-color-hover);
+}
+
+#frq-dist-u-form input:focus {
+	outline: 1px solid var(--highlight);
+}
+
+#frq-dist-u-form button {
+	display: block;
+	width: 220px;
+	text-align: center;
+	background-color: var(--highlight);
+	border-color: var(--border-color);
+	padding: 5.5px 0 10px 0;
+	margin: 10px auto;
+}
+
+#frq-dist-u-form button:hover {
+	border-color: var(--border-color-hover);
+}
+
+#frq-dist-u-form button:active {
+	filter: brightness(0.7);
+}
+
+#frq-dist-u-table {
+	overflow: scroll;
+	margin: 0 auto;
+	display: flex;
+	justify-content: center;
+}
+
+#frq-dist-u-table table {
+	border-spacing: 0;
+	border: 1px solid var(--border-color);
+	width: 100%;
+}
+
+#frq-dist-u-table th,
+td {
+	text-align: center;
+	padding: 8px;
+	border: 1px solid var(--border-color);
+}
+/* FREQ-DIST-UNGROUPED */
+
+/* @media only screen and (min-width: 470px) {
+	.grid {
+		grid-template-rows: auto auto auto;
+		grid-template-columns: auto auto auto 1fr;
+	}
+
+	#frq-dist-u-form label {
+		grid-row: auto;
+		grid-column: auto;
+	}
+
+	#frq-dist-u-form label:nth-child(1),
+	#frq-dist-u-form button {
+		grid-column: 1 / 5;
+	}
+
+	#frq-dist-u-form label:nth-child(2),
+	#frq-dist-u-form label:nth-child(3),
+	#frq-dist-u-form label:nth-child(4) {
+		grid-row: 2 / span 1;
+	}
+
+	#frq-dist-u-form label:nth-child(3) {
+		margin-left: 20px;
+	}
+} */
+
 @media only screen and (min-width: 960px) {
 	body {
 		display: grid;
@@ -184,6 +288,7 @@ main h3 {
 	aside {
 		position: relative;
 		margin: 0;
+		margin-right: 60px;
 	}
 
 	aside {
