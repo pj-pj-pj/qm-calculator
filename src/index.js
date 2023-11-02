@@ -50,7 +50,3 @@ sidebarsBtn.forEach((btn) => {
 //
 
 sidebarsBtn[0].addEventListener('click', fdtuUIinit);
-
-// DELETE LATER!!!
-unchild(main);
-fdtuUIinit();
