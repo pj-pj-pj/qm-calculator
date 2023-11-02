@@ -218,16 +218,15 @@ main h3 {
 }
 
 #frq-dist-u-table {
-	overflow: scroll;
+	overflow: auto;
 	margin: 0 auto;
-	display: flex;
-	justify-content: center;
+	margin-bottom: 20px;
 }
 
 #frq-dist-u-table table {
+	margin: 0 auto;
 	border-spacing: 0;
 	border: 1px solid var(--border-color);
-	width: 100%;
 }
 
 #frq-dist-u-table th,
@@ -237,6 +236,19 @@ td {
 	border: 1px solid var(--border-color);
 }
 /* FREQ-DIST-UNGROUPED */
+
+code {
+	font-size: 15px;
+}
+
+pre {
+	overflow-x: auto;
+	white-space: pre-wrap;
+	white-space: -moz-pre-wrap;
+	white-space: -pre-wrap;
+	white-space: -o-pre-wrap;
+	word-wrap: break-word;
+}
 
 /* @media only screen and (min-width: 470px) {
 	.grid {
