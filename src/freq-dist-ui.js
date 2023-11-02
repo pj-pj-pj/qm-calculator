@@ -61,7 +61,6 @@ function displayResults(data, classes, populationOrSample) {
   }
 
   tableContainer.appendChild(table);
-  main.appendChild(tableContainer);
 }
 
 function frqDistUngrFormInit(form) {
@@ -111,7 +110,10 @@ function frqDistUngrFormInit(form) {
   checkboxes.forEach((checkbox) => {
     checkbox.addEventListener('change', (event) => {
       checkboxes.forEach((cb) => {
-        if (cb !== event.target) {
+        if (!cb.checked && cb !== event.target) {
+          // eslint-disable-next-line no-param-reassign
+          cb.checked = true;
+        } else if (cb !== event.target) {
           // eslint-disable-next-line no-param-reassign
           cb.checked = false;
         }
@@ -136,12 +138,11 @@ function frqDistUngrFormInit(form) {
   warningMsg.style.textAlign = 'center';
 
   submit.addEventListener('click', (e) => {
-    // display error
     e.preventDefault();
     unchild(tableContainer);
 
-    if ((!datasetInput.value || !classesInput.value)
-    && (!populationCheckbox.checked || !sampleCheckbox.checked)) {
+    if ((!datasetInput.value || !classesInput.value)) {
+      // display error
       warningMsg.style.display = 'block';
     } else { // undisplay error and display results
       const data = datasetInput.value.split(',').map(Number);
@@ -167,5 +168,45 @@ export default function fdtuUIinit() {
 
   frqDistUngrFormInit(form);
 
-  main.append(headerTt, overview, form);
+  const formula = document.createElement('div');
+  formula.innerHTML = '<h3>✏️ How It Works</h3>';
+  formula.innerHTML += '<p>From the data entered, the calculator computes for the <b>class width</b> (range / class number) rounded <i>up</i> to the nearest whole number. <i>(<b>range</b> = min - max)</i></p>';
+  formula.innerHTML += 'Using the computed class width, the calculator now computes for the <b>class intervals</b> of the data. Starting with the lowest value in the data set which will be used as base for the lower class interval, the calculator will add a value of (class width - 1) to get the higher class interval. The value of class width will be added to the following class intervals.';
+  formula.innerHTML += `<p><code><pre>
+  const maxClassInterval = Math.min(...dataSet) + ((classWidth * classNumber) - 1);
+  for (let i = Math.min(...dataSet); i <= maxClassInterval; i += classWidth) {
+    classInterval.push({ min: i, max: i + (classWidth - 1) });
+  }
+  </pre></code></p>`;
+  formula.innerHTML += 'The calculator proceeds to computing the <b>class boundaries</b> by subtracting 0.5 to the lower value of class intervals and adding 0.5 to the higher value of class intervals.';
+  formula.innerHTML += `<p><code><pre>
+  classBoundaries = classInterval.map((classInt) => ({
+    min: classInt.min - 0.5,
+    max: classInt.max + 0.5,
+  }));
+  </pre></code></p>`;
+  formula.innerHTML += '<b>Class mark</b> is computed by adding the lower and higher value of the corresponding interval and dividing them to 2';
+  formula.innerHTML += `<p><code><pre>
+  classMark = fTable.classInterval.map((classInt) => (classInt.min + classInt.max) / 2);
+  </pre></code></p>`;
+  formula.innerHTML += 'The calculator computes the <b>frequency</b> of values within each class interval by tallying the number of data points that fall into each interval.';
+  formula.innerHTML += `<p><code><pre>
+  classFrequency = [];
+  for (let i = 0; i < classNumber; i += 1) {
+    classFrequency.push(0);
+    for (let j = 0; j < dataSet.length; j += 1) {
+      if (dataSet[j] >= classInterval[i].min && dataSet[j] <= classInterval[i].max) {
+        classFrequency[i] += 1;
+      }
+    }
+  }
+  </pre></code></p>`;
+  formula.innerHTML += 'The <b>relative frequency</b> for each class interval is calculated by dividing the corresponding class frequency by the total number of data points in the dataset, resulting in a proportional value for each interval. <i>The resulting value that has any fractional part of the number will have a maximum of three decimal places.</i>';
+  formula.innerHTML += `<p><code><pre>
+  fTable.relativeFrequency = fTable.classFrequency.map((frequency) => (
+    Number((frequency / dataSet.length).toFixed(3))
+  ));
+  </pre></code></p>`;
+
+  main.append(headerTt, overview, form, tableContainer, formula);
 }
