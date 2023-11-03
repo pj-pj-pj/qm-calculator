@@ -50,5 +50,5 @@ function getStandardDeviation(data, type = 'population') {
 }
 
 module.exports = {
-  getMean, getMode, getMedian, getVariance, getStandardDeviation,
+  limitDecimalPoints, getMean, getMode, getMedian, getVariance, getStandardDeviation,
 };
