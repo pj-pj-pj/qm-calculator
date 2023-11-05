@@ -2,7 +2,7 @@
 const { limitDecimalPoints } = require('./mean-median-mode');
 
 function rank(data) {
-  const sortedDescending = data.sort().reverse();
+  const sortedDescending = [...data].sort((a, b) => a - b).reverse();
   let rankData = [];
   for (let i = 0; i < sortedDescending.length; i++) {
     rankData[i] = sortedDescending.indexOf(data[i]) + 1;
