@@ -32,10 +32,11 @@ function displayResults(data, classes) {
   const result = groupToFreqDistTable(data, classes);
 
   const dataDisplay = document.createElement('p');
+  dataDisplay.textContent = 'Data Set (Sorted): ';
   dataDisplay.id = 'data-set-display';
   const sorted = data.sort();
   for (let i = 0; i < sorted.length; i += 1) {
-    if (dataDisplay.textContent === '') {
+    if (dataDisplay.textContent === 'Data Set (Sorted): ') {
       dataDisplay.textContent += data[i];
     } else {
       dataDisplay.textContent += `, ${data[i]}`;
@@ -70,13 +71,13 @@ function displayResults(data, classes) {
     });
   }
 
-  tableContainer.append(dataDisplay, table);
+  tableContainer.append(table, dataDisplay);
 }
 
 function frqDistUngrFormInit(form) {
   // data set field
   const datasetLabel = document.createElement('label');
-  datasetLabel.textContent = 'Data Set (e.g., 1,2,3):';
+  datasetLabel.textContent = 'Data Set (e.g. 1,2,3):';
   const datasetInput = document.createElement('input');
   datasetInput.type = 'text';
   datasetInput.name = 'dataset';
@@ -130,6 +131,9 @@ function frqDistUngrFormInit(form) {
       displayResults(data, classes);
       warningMsg.style.display = 'none';
     }
+
+    classesInput.value = '';
+    datasetInput.value = '';
   });
 
   form.append(datasetLabel, classesLabel, submit, warningMsg);
