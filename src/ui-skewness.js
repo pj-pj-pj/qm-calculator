@@ -4,6 +4,7 @@ import { calculateSkewness, getSymmetry } from './symmetry-and-skewness';
 
 const main = document.querySelector('main');
 const resultContainer = document.createElement('div');
+resultContainer.id = 'skewness-result-container';
 
 // 0 - 9 and comma(,) and point(.)  : true
 // point can be entered multiple times ;-; (i leave it to user's hands)
@@ -129,5 +130,34 @@ export default function skewnessInit() {
 
   skewnessFormInit(form);
 
-  main.append(headerTt, overview, form, resultContainer);
+  const formula = document.createElement('div');
+  formula.innerHTML = '<h3>✏️ How It Works</h3>';
+  formula.innerHTML += '<p>The skewness of a dataset is calculated using the following formula:</p>';
+  formula.innerHTML += '<p>Skewness = 3(Mean−Median) / Standard Deviation</p>';
+  formula.innerHTML += '<p>Where:</p>';
+  formula.innerHTML += '<p>- Mean is the mean (average) of the dataset.</p>';
+  formula.innerHTML += '<p>- Median is the median of the dataset.</p>';
+  formula.innerHTML += '<p>- Standard Deviation is the standard deviation of the dataset.</p>';
+  formula.innerHTML += '<p>Expressed in javascript:</p>';
+  formula.innerHTML += `<p><code><pre>
+  function calculateSkewness(data, type = 'population') {
+    const skewness = (3 * (getMean(data) - getMedian(data))) / getStandardDeviation(data, type);
+    return skewness;
+  }
+  </pre></code></p>`;
+
+  formula.innerHTML += '<p>The formula essentially measures the asymmetry of the dataset. If the skewness is:</p>';
+  formula.innerHTML += '<p>- Positive: The data distribution is skewed to the right (positively skewe</p>';
+  formula.innerHTML += '<p>- Negative: The data distribution is skewed to the left (negatively skewed).</p>';
+  formula.innerHTML += '<p>- The data distribution is symmetric (normally skewed).</p>';
+  formula.innerHTML += '<p>Expressed in javascript:</p>';
+  formula.innerHTML += `<p><code><pre>
+  function getSymmetry(skewness) {
+    if (skewness > 0) return 'positively skewed';
+    if (skewness < 0) return 'negatively skewed';
+    return 'normally skewed'; // === 0
+  }
+  </pre></code></p>`;
+
+  main.append(headerTt, overview, form, resultContainer, formula);
 }
