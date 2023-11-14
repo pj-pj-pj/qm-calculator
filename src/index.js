@@ -1,5 +1,5 @@
 /* eslint-disable import/no-cycle */
-import fdtuUIinit from './freq-dist-ui';
+import fdtuUIinit from './ui-freq-dist';
 
 // for the responsive sidebar, show on click then hide
 const menuBtn = document.querySelector('nav #nav-button');
