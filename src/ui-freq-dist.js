@@ -28,7 +28,7 @@ function checkIfNumberOrComma(e) {
 }
 
 // population or sample will be used another day (for variance)
-function displayResults(data, classes, populationOrSample) {
+function displayResults(data, classes) {
   const result = groupToFreqDistTable(data, classes);
 
   const table = document.createElement('table');
@@ -88,40 +88,7 @@ function frqDistUngrFormInit(form) {
 
   classesInput.addEventListener('keypress', checkIfNumber);
 
-  // Checkbox for population
-  const populationLabel = document.createElement('label');
-  const populationCheckbox = document.createElement('input');
-  populationCheckbox.type = 'checkbox';
-  populationCheckbox.name = 'population';
-  populationCheckbox.checked = true; // Set as default
-  populationLabel.appendChild(populationCheckbox);
-  populationLabel.appendChild(document.createTextNode(' Population'));
-
-  // Checkbox for sample
-  const sampleLabel = document.createElement('label');
-  const sampleCheckbox = document.createElement('input');
-  sampleCheckbox.type = 'checkbox';
-  sampleCheckbox.name = 'sample';
-  sampleLabel.appendChild(sampleCheckbox);
-  sampleLabel.appendChild(document.createTextNode(' Sample')); // so labels appear after the checkbox
-
-  // Event listener to allow only one checkbox to be checked
-  const checkboxes = [populationCheckbox, sampleCheckbox];
-  checkboxes.forEach((checkbox) => {
-    checkbox.addEventListener('change', (event) => {
-      checkboxes.forEach((cb) => {
-        if (!cb.checked && cb !== event.target) {
-          // eslint-disable-next-line no-param-reassign
-          cb.checked = true;
-        } else if (cb !== event.target) {
-          // eslint-disable-next-line no-param-reassign
-          cb.checked = false;
-        }
-      });
-    });
-  });
-
-  // Add 'required' attribute to input fields and checkboxes
+  // Add 'required' attribute to input fields
   datasetInput.setAttribute('required', true);
   classesInput.setAttribute('required', true);
   // Event listener for form submission
@@ -145,14 +112,17 @@ function frqDistUngrFormInit(form) {
       // display error
       warningMsg.style.display = 'block';
     } else { // undisplay error and display results
-      const data = datasetInput.value.split(',').map(Number);
+      const data = datasetInput.value
+        .split(',')
+        .filter((value) => value.trim() !== '') // Filter out empty values
+        .map(Number);
       const classes = Number(classesInput.value);
-      displayResults(data, classes, populationCheckbox.checked);
+      displayResults(data, classes);
       warningMsg.style.display = 'none';
     }
   });
 
-  form.append(datasetLabel, classesLabel, populationLabel, sampleLabel, submit, warningMsg);
+  form.append(datasetLabel, classesLabel, submit, warningMsg);
 }
 
 export default function fdtuUIinit() {
