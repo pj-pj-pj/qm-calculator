@@ -130,10 +130,10 @@ function frqDistUngrFormInit(form) {
       const classes = Number(classesInput.value);
       displayResults(data, classes);
       warningMsg.style.display = 'none';
-    }
 
-    classesInput.value = '';
-    datasetInput.value = '';
+      classesInput.value = '';
+      datasetInput.value = '';
+    }
   });
 
   form.append(datasetLabel, classesLabel, submit, warningMsg);
