@@ -31,6 +31,16 @@ function checkIfNumberOrComma(e) {
 function displayResults(data, classes) {
   const result = groupToFreqDistTable(data, classes);
 
+  const dataDisplay = document.createElement('p');
+  dataDisplay.id = 'data-set-display';
+  const sorted = data.sort();
+  for (let i = 0; i < sorted.length; i += 1) {
+    if (dataDisplay.textContent === '') {
+      dataDisplay.textContent += data[i];
+    } else {
+      dataDisplay.textContent += `, ${data[i]}`;
+    }
+  }
   const table = document.createElement('table');
 
   const headerRow = table.insertRow();
@@ -60,7 +70,7 @@ function displayResults(data, classes) {
     });
   }
 
-  tableContainer.appendChild(table);
+  tableContainer.append(dataDisplay, table);
 }
 
 function frqDistUngrFormInit(form) {
