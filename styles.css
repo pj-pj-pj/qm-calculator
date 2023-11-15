@@ -6,7 +6,7 @@
 	--highlight: #646cff;
 	--color-primary: #cdd9e5;
 	--border-color: #2d3139;
-	--border-color-hover: #677184;
+	--border-color-hover: #727b8c;
 	--button-color: #2a272d;
 	--text-color: white;
 }
@@ -161,8 +161,10 @@ main h3 {
 	font-weight: normal;
 }
 
-/* FREQ-DIST-UNGROUPED */
-#frq-dist-u-form {
+/* FREQ-DIST-UNGROUPED / SKEWNESS / SIMPLE-CORRELATION */
+#frq-dist-u-form,
+#skewness-form,
+#simple-corre-form {
 	display: grid;
 
 	gap: 8px;
@@ -170,12 +172,15 @@ main h3 {
 	align-items: center;
 }
 
-#frq-dist-u-form label:first-child input {
+#frq-dist-u-form label:first-child input,
+#skewness-form label:first-child input,
+#simple-corre-form label:nth-child(2) input,
+#simple-corre-form label:nth-child(4) input {
 	width: 100%;
 }
 
 #frq-dist-u-form label:nth-child(2) input {
-	width: 30px;
+	width: 70px;
 	text-align: center;
 	margin-left: 5px;
 }
@@ -185,21 +190,32 @@ main h3 {
 	width: 100px;
 }
 
-#frq-dist-u-form input {
-	padding: 3px 4px;
+#frq-dist-u-form input,
+#skewness-form input,
+#simple-corre-form input {
+	padding: 8px 4px;
 	border-radius: 2px;
 	border: 1px solid var(--border-color);
+	color: white;
+	background-color: transparent;
+	margin: 10px 0 0 0;
 }
 
-#frq-dist-u-form input:hover {
+#frq-dist-u-form input:hover,
+#skewness-form input:hover,
+#simple-corre-form input:hover {
 	border-color: var(--border-color-hover);
 }
 
-#frq-dist-u-form input:focus {
+#frq-dist-u-form input:focus,
+#skewness-form input:focus,
+#simple-corre-form input:focus {
 	outline: 1px solid var(--highlight);
 }
 
-#frq-dist-u-form button {
+#frq-dist-u-form button,
+#skewness-form button,
+#simple-corre-form button {
 	display: block;
 	width: 220px;
 	text-align: center;
@@ -209,33 +225,40 @@ main h3 {
 	margin: 10px auto;
 }
 
-#frq-dist-u-form button:hover {
+#frq-dist-u-form button:hover,
+#skewness-form button:hover,
+#simple-corre-form button:hover {
 	border-color: var(--border-color-hover);
 }
 
-#frq-dist-u-form button:active {
+#frq-dist-u-form button:active,
+#skewness-form button:active,
+#simple-corre-form button:active {
 	filter: brightness(0.7);
 }
 
-#frq-dist-u-table {
+#frq-dist-u-table,
+#skewness-result-container,
+#simple-corre-table {
 	overflow: auto;
 	margin: 0 auto;
-	margin-bottom: 20px;
+	margin-bottom: 35px;
 }
 
-#frq-dist-u-table table {
+#frq-dist-u-table table,
+#simple-corre-table table {
 	margin: 0 auto;
 	border-spacing: 0;
 	border: 1px solid var(--border-color);
 }
 
-#frq-dist-u-table th,
+th,
 td {
 	text-align: center;
 	padding: 8px;
 	border: 1px solid var(--border-color);
 }
-/* FREQ-DIST-UNGROUPED */
+/* FREQ-DIST-UNGROUPED / SKEWNESS */
 
 code {
 	font-size: 15px;
@@ -249,33 +272,6 @@ pre {
 	white-space: -o-pre-wrap;
 	word-wrap: break-word;
 }
-
-/* @media only screen and (min-width: 470px) {
-	.grid {
-		grid-template-rows: auto auto auto;
-		grid-template-columns: auto auto auto 1fr;
-	}
-
-	#frq-dist-u-form label {
-		grid-row: auto;
-		grid-column: auto;
-	}
-
-	#frq-dist-u-form label:nth-child(1),
-	#frq-dist-u-form button {
-		grid-column: 1 / 5;
-	}
-
-	#frq-dist-u-form label:nth-child(2),
-	#frq-dist-u-form label:nth-child(3),
-	#frq-dist-u-form label:nth-child(4) {
-		grid-row: 2 / span 1;
-	}
-
-	#frq-dist-u-form label:nth-child(3) {
-		margin-left: 20px;
-	}
-} */
 
 @media only screen and (min-width: 960px) {
 	body {
