@@ -1,8 +1,13 @@
 const { rank, calculateSpearmanRank } = require('../spearman-rank');
 
-test('testing rank function', () => {
+test('testing rank function (numerical)', () => {
   const data = [8,16,10,3,17];
   expect(rank(data)).toEqual([4,2,3,5,1])
+})
+
+test('testing rank function (ordinal)', () => {
+  const data = ['University','High School','Elementary','Preparatory','Kindergarten'];
+  expect(rank(data)).toEqual([1,2,3,4,5])
 })
 
 test('testing calculateSpearmanRank function', () => {
