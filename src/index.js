@@ -1,5 +1,6 @@
 /* eslint-disable import/no-cycle */
-import fdtuUIinit from './freq-dist-ui';
+import fdtuUIinit from './ui-freq-dist';
+import skewnessInit from './ui-skewness';
 
 // for the responsive sidebar, show on click then hide
 const menuBtn = document.querySelector('nav #nav-button');
@@ -47,6 +48,6 @@ sidebarsBtn.forEach((btn) => {
     unchild(main);
   });
 });
-//
 
 sidebarsBtn[0].addEventListener('click', fdtuUIinit);
+sidebarsBtn[1].addEventListener('click', skewnessInit);

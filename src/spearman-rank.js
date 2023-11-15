@@ -20,17 +20,18 @@ function rank(data) {
 
 function calculateSpearmanRank(xData, yData) {
   const n = xData.length;
-  let xRankData = rank(xData), yRankData = rank(yData), diData = [];
-  for (let i = 0; i < n; i++) {
+  const xRankData = rank(xData); const yRankData = rank(yData); const diData = [];
+  for (let i = 0; i < n; i += 1) {
     diData[i] = xRankData[i] - yRankData[i];
   }
-  let diSquaredData = diData.map((num) => num ** 2);
-  const diSquaredSummation = diSquaredData.reduce((acc, val) => acc + val, 0);  
+  const diSquaredData = diData.map((num) => num ** 2);
+  const diSquaredSummation = diSquaredData.reduce((acc, val) => acc + val, 0);
   const spearmanRank = 1 - ((6 * diSquaredSummation) / (n * ((n ** 2) - 1)));
 
   return limitDecimalPoints(spearmanRank, 3);
 }
 
-// pwede mo nalang din gamitin yung getNature tsaka getStrength method dun sa simple-correlation module para dito sa spearman
+// pwede mo nalang din gamitin yung getNature tsaka getStrength method
+// dun sa simple-correlation module para dito sa spearman
 
-module.exports = {rank, calculateSpearmanRank};
+module.exports = { rank, calculateSpearmanRank };
