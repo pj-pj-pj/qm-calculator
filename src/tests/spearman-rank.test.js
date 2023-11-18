@@ -15,3 +15,9 @@ test('testing calculateSpearmanRank function', () => {
   const yData = [8,10,19,4,15,23,12,14];
   expect(calculateSpearmanRank(xData,yData)).toBe(0.238)
 })
+
+test('testing calculateSpearmanRank function with duplicate ranks', () => {
+  const xData = ['University', 'University', 'Secondary', 'Secondary', 'Preparatory', 'Nursery', 'Illiterate'];
+  const yData = [8, 60, 10, 15, 25, 10, 50];
+  expect(calculateSpearmanRank(xData,yData)).toBe(-0.174)
+})
