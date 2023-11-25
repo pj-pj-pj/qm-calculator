@@ -109,15 +109,3 @@ function hasDuplicates(arr) {
 
 
 module.exports = { rank, calculateSpearmanRank };
-
-//console.log(rank([8,16,10,10,3,3,17,5,5,5,89,89]));
-/** 
-console.log(calculateSpearmanRank(
-['University', 'University', 'University', 'Secondary', 'Secondary', 'Preparatory', 'Nursery', 'Illiterate'], 
-[8, 60, 30, 10, 15, 25, 10, 50]
-));*/
-
-/**if (i >= mainSortedData.length - 1){
-      rankData.push(i + 1);
-      dataArray.push(mainSortedData[i].value);
-    } else {*/
