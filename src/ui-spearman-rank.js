@@ -31,14 +31,14 @@ function displayResults(x, y, labels) {
   const headerRow = table.insertRow();
   const duplicatesChecker = hasDuplicates(x) || hasDuplicates(y);
   if (duplicatesChecker === false){
-    labels.push('Rank X'); labels.push('Rank Y'); labels.push('di'); labels.push('di^2');
+    labels.push('Rank X'); labels.push('Rank Y'); labels.push('di'); labels.push('di²');
     labels.forEach((header) => {
       const th = document.createElement('th');
       th.textContent = header;
       headerRow.appendChild(th);
     });
   } else {
-    labels.push('Rank X'); labels.push('Rank Y'); labels.push('Rx-MRx'); labels.push('Ry-MRy'); labels.push('(Rx-MRx)*(Ry-MRy)'); labels.push('(Rx-MRx)^2'); labels.push('(Ry-MRy)^2');
+    labels.push('Rank X'); labels.push('Rank Y'); labels.push('Rx-MRx'); labels.push('Ry-MRy'); labels.push('(Rx-MRx)*(Ry-MRy)'); labels.push('(Rx-MRx)²'); labels.push('(Ry-MRy)²');
     labels.forEach((header) => {
       const th = document.createElement('th');
       th.textContent = header;
@@ -63,6 +63,15 @@ function displayResults(x, y, labels) {
       const diCell = row.insertCell(); diCell.textContent = diData[i];
       const diSquaredCell = row.insertCell(); diSquaredCell.textContent = diSquaredData[i];
     }
+
+    const row = table.insertRow();
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = `∑di² = ${diSquaredSummation}`;
+
   } else {
     const xRankData = spearmanValues.xRankData; 
     const yRankData = spearmanValues.yRankData;
@@ -90,6 +99,17 @@ function displayResults(x, y, labels) {
       const RxMinusMRxRaiseTo2Cell = row.insertCell(); RxMinusMRxRaiseTo2Cell.textContent = RxMinusMRxRaiseTo2Data[i];
       const RyMinusMRyRaiseTo2Cell = row.insertCell(); RyMinusMRyRaiseTo2Cell.textContent = RyMinusMRyRaiseTo2Data[i];
     }
+
+    const row = table.insertRow();
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = `∑MRx = ${MRx}`;
+    row.insertCell().textContent = `∑MRy = ${MRy}`;
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = ``;
+    row.insertCell().textContent = `∑(Rx-MRx)*(Ry-MRy) = ${SummationOfProductData}`;
+    row.insertCell().textContent = `∑(Rx-MRx)² = ${SummationOfRxMinusMRxRaiseTo2Data}`;
+    row.insertCell().textContent = `∑(Ry-MRy)² = ${SummationOfRyMinusMRyRaiseTo2Data}`;
   }
   
   tableContainer.append(p, table);
