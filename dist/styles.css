@@ -35,12 +35,12 @@ footer {
 	width: 100%;
 	text-align: center;
 	margin-top: auto;
-	padding: 2% 0;
-	position: fixed;
+	padding: 12px 0;
 	left: 0;
 	bottom: 0;
-	background-color: var(--darker-color);
+	background-color: var(--button-color);
 	font-size: 11px;
+	grid-column: span 2;
 }
 
 footer a {
