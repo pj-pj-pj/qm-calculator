@@ -1,41 +1,97 @@
+//under construction
+
 import { unchild } from './index';
-import { getFinalLabel, checkIfNumberOrComma } from './simple-correlation-coefficient';
-import { calculateSpearmanRank, rank } from './spearman-rank';
+import { getFinalLabel } from './simple-correlation-coefficient';
+import { spearmanRank,  hasDuplicates } from './spearman-rank';
 
 const main = document.querySelector('main');
 const tableContainer = document.createElement('div');
 tableContainer.id = 'spearman-rank-table';
 
+function checkIfNumberOrLetterOrComma(e) {
+  const { key } = e;
+  if ((key >= '0' && key <= '9') || (key >= 'a' && key <= 'z') || (key >= 'A' && key <= 'Z') || key === ',' || key === '.') {
+    return true;
+  }
+  e.preventDefault();
+  return false;
+}
 
 function displayResults(x, y, labels) {
-  const spearmanRankValue = calculateSpearmanRank(x, y);
+  console.log(x);
+  const spearmanValues = spearmanRank(x, y);
+  const spearmanRankValue = spearmanValues.computedValue;
   const spearmanRankLabel = getFinalLabel(spearmanRankValue);
+
   const p = document.createElement('p');
   p.textContent = `Result: ${spearmanRankValue}, ${spearmanRankLabel}`;
 
   const table = document.createElement('table');
 
   const headerRow = table.insertRow();
-  labels.forEach((header) => {
-    const th = document.createElement('th');
-    th.textContent = header;
-    headerRow.appendChild(th);
-  });
-
-  for (let i = 0; i < x.length; i += 1) {
-    const row = table.insertRow();
-
-    // x
-    const xCell = row.insertCell();
-    xCell.textContent = x[i];
-
-    // y
-    const yCell = row.insertCell();
-    yCell.textContent = y[i];
-
-    
+  const duplicatesChecker = hasDuplicates(x) || hasDuplicates(y);
+  if (duplicatesChecker === false){
+    labels.push('Rank X'); labels.push('Rank Y'); labels.push('di'); labels.push('di^2');
+    labels.forEach((header) => {
+      const th = document.createElement('th');
+      th.textContent = header;
+      headerRow.appendChild(th);
+    });
+  } else {
+    labels.push('Rank X'); labels.push('Rank Y'); labels.push('Rx-MRx'); labels.push('Ry-MRy'); labels.push('(Rx-MRx)*(Ry-MRy)'); labels.push('(Rx-MRx)^2'); labels.push('(Ry-MRy)^2');
+    labels.forEach((header) => {
+      const th = document.createElement('th');
+      th.textContent = header;
+      headerRow.appendChild(th);
+    });
   }
-
+  
+  if (duplicatesChecker === false){
+    const xRankData = spearmanValues.xRankData; 
+    const yRankData = spearmanValues.yRankData;
+    const diData = spearmanValues.diData;
+    const diSquaredData = spearmanValues.diSquaredData;
+    const diSquaredSummation = spearmanValues.diSquaredSummation;
+    
+    for (let i = 0; i < x.length; i += 1) {
+      const row = table.insertRow();
+  
+      const xCell = row.insertCell(); xCell.textContent = x[i];
+      const yCell = row.insertCell(); yCell.textContent = y[i];
+      const xRankCell = row.insertCell(); xRankCell.textContent = xRankData[i];
+      const yRankCell = row.insertCell(); yRankCell.textContent = yRankData[i];
+      const diCell = row.insertCell(); diCell.textContent = diData[i];
+      const diSquaredCell = row.insertCell(); diSquaredCell.textContent = diSquaredData[i];
+    }
+  } else {
+    const xRankData = spearmanValues.xRankData; 
+    const yRankData = spearmanValues.yRankData;
+    const MRx = spearmanValues.MRx;
+    const MRy = spearmanValues.MRy;
+    const RxMinusMrxData = spearmanValues.RxMinusMrxData;
+    const RyMinusMryData = spearmanValues.RyMinusMryData;
+    const ProductData = spearmanValues.ProductData;
+    const RxMinusMRxRaiseTo2Data = spearmanValues.RxMinusMRxRaiseTo2Data;
+    const RyMinusMRyRaiseTo2Data = spearmanValues.RyMinusMRyRaiseTo2Data;
+    const SummationOfProductData = spearmanValues.SummationOfProductData;
+    const SummationOfRxMinusMRxRaiseTo2Data = spearmanValues.SummationOfRxMinusMRxRaiseTo2Data;
+    const SummationOfRyMinusMRyRaiseTo2Data = spearmanValues.SummationOfRyMinusMRyRaiseTo2Data;
+    
+    for (let i = 0; i < x.length; i += 1) {
+      const row = table.insertRow();
+  
+      const xCell = row.insertCell(); xCell.textContent = x[i];
+      const yCell = row.insertCell(); yCell.textContent = y[i];
+      const xRankCell = row.insertCell(); xRankCell.textContent = xRankData[i];
+      const yRankCell = row.insertCell(); yRankCell.textContent = yRankData[i];
+      const RxMinusMrxCell = row.insertCell(); RxMinusMrxCell.textContent = RxMinusMrxData[i];
+      const RyMinusMryCell = row.insertCell(); RyMinusMryCell.textContent = RyMinusMryData[i];
+      const ProductCell = row.insertCell(); ProductCell.textContent = ProductData[i];
+      const RxMinusMRxRaiseTo2Cell = row.insertCell(); RxMinusMRxRaiseTo2Cell.textContent = RxMinusMRxRaiseTo2Data[i];
+      const RyMinusMRyRaiseTo2Cell = row.insertCell(); RyMinusMRyRaiseTo2Cell.textContent = RyMinusMRyRaiseTo2Data[i];
+    }
+  }
+  
   tableContainer.append(p, table);
 }
 
@@ -49,7 +105,7 @@ function spearmanFormInit(form) {
   xdatasetInput.placeholder = '1,2,3';
   xdatasetLabel.appendChild(xdatasetInput);
 
-  xdatasetInput.addEventListener('keypress', checkIfNumberOrComma);
+  xdatasetInput.addEventListener('keypress', checkIfNumberOrLetterOrComma);
 
   // y-data set field
   const ydatasetLabel = document.createElement('label');
@@ -60,7 +116,7 @@ function spearmanFormInit(form) {
   ydatasetInput.placeholder = '1,2,3';
   ydatasetLabel.appendChild(ydatasetInput);
 
-  ydatasetInput.addEventListener('keypress', checkIfNumberOrComma);
+  ydatasetInput.addEventListener('keypress', checkIfNumberOrLetterOrComma);
 
   // x label
   const xLabel = document.createElement('label');
@@ -106,14 +162,22 @@ function spearmanFormInit(form) {
       // display error
       warningMsg.style.display = 'block';
     } else { // undisplay error and display results
-      const xdata = xdatasetInput.value
+      let xdata = xdatasetInput.value
         .split(',')
         .filter((value) => value.trim() !== '') // Filter out empty values
-        .map(Number);
-      const ydata = ydatasetInput.value
+      xdata = xdata.map((value) => {
+        const parsedValue = Number(value.trim());
+        return isNaN(parsedValue) ? value.trim() : parsedValue;
+      });
+      
+      let ydata = ydatasetInput.value
         .split(',')
         .filter((value) => value.trim() !== '') // Filter out empty values
-        .map(Number);
+      ydata = ydata.map((value) => {
+        const parsedValue = Number(value.trim());
+        return isNaN(parsedValue) ? value.trim() : parsedValue;
+      });
+
       const dataLabels = [xLabelInput.value, yLabelInput.value];
       displayResults(xdata, ydata, dataLabels);
       warningMsg.style.display = 'none';
@@ -130,14 +194,15 @@ function spearmanFormInit(form) {
 
 export default function spearmanUIinit() {
   const headerTt = document.createElement('h2');
-  headerTt.textContent = '# Simple Correlation Coefficient';
+  headerTt.textContent = '# Spearman Rank Correlation Coefficient';
 
   const overview = document.createElement('div');
-  overview.innerHTML = "<p>It is also called as <b>Pearson's correlation</b> or <b>Product moment correlation coefficient</b></p>";
+  overview.innerHTML = "<p>The Spearman rank correlation coefficient, is a statistical measure that assesses the strength and direction of the <b>monotonic relationship</b> between two variables. It is a non-parametric measure, meaning it doesn't rely on the distribution of the data, making it suitable for both <b>continuous</b> and <b>ordinal data.</b>";
   overview.innerHTML += '<p>It measures the nature and strength between two variables of the quantitative type</p>';
+  overview.innerHTML += '<p><i>Note: when inserting ordinal data (not a number but a label), type them in order, (for example: University,Secondary,Preparatory,Nursery,Illiterate) and type the corresponding value for each of the values on the second variable input (Y Data Set)</i></p>';
 
   const form = document.createElement('form');
-  form.id = 'simple-corre-form';
+  form.id = 'spearman-rank-form';
 
   spearmanFormInit(form);
 
@@ -154,38 +219,142 @@ export default function spearmanUIinit() {
   }
   </pre></code></p>`;
 
-  formula.innerHTML += '<p>To calculate the correlation coefficient:</p>';
-  formula.innerHTML += 'The correlation calculation involves various steps, including obtaining sums, products, and squared values of data points from two datasets. The size of the datasets (n) is considered. Applying the Pearson correlation formula, which involves covariance and standard deviations, yields the correlation coefficient. The final result is limited to three decimal points.';
+  formula.innerHTML += '<p>To rank the data:</p>';
+  formula.innerHTML += '<p>This function rank is designed to assign ranks to an array of data points, with a distinction made between cases where the data contains duplicates and where it does not. The function first creates an array of objects, each containing the original value and its index. Depending on whether the data is composed of strings or numerical values, it either maintains the original order for strings or sorts the array in descending order for numerical values. When duplicates are present, the function calculates average ranks for sets of identical values and assigns these ranks to all occurrences. The function then maps the calculated ranks back to the original order of the data using the stored indices, providing a final array of ranked data. This approach ensures accurate ranking, making the function suitable for scenarios where the presence of duplicate values needs to be appropriately considered.</p>';
   formula.innerHTML += '<p>Expressed in javascript:</p>';
   formula.innerHTML += `<p><code><pre>
-  function calculateSimpleCorrelation(xData, yData) {
-    const summationX = xData.reduce((acc, val) => acc + val, 0);
-    const summationY = yData.reduce((acc, val) => acc + val, 0);
-  
-    const xyData = []; const xSquaredData = []; const
-      ySquaredData = [];
-    for (let i = 0; i < xData.length; i += 1) {
-      xyData[i] = xData[i] * yData[i];
-      xSquaredData[i] = xData[i] ** 2;
-      ySquaredData[i] = yData[i] ** 2;
+  function rank(data) {
+    let dataObjects = [];
+    for (let i = 0; i < data.length; i++) {
+      dataObjects.push({value: data[i], index: i});
     }
   
-    const summationXY = xyData.reduce((acc, val) => acc + val, 0);
-    const summationXSquared = xSquaredData.reduce((acc, val) => acc + val, 0);
-    const summationYSquared = ySquaredData.reduce((acc, val) => acc + val, 0);
+    let rankData = [];
+    let mainSortedData = [];
+    if (typeof data[0] === 'string'){
+      mainSortedData = dataObjects;
+    } else {
+      mainSortedData = [...dataObjects].sort((a, b) => b.value - a.value);
+    }
+    //inserted two dumies para hindi sya malito sa variable i.
+    mainSortedData.push({value: undefined, index: undefined});
+    mainSortedData.push({value: undefined, index: undefined});
+    const dataArray = [], duplicateRank = []; 
+    
+    for (let i = 0; i < data.length; i++) {
+      if (mainSortedData[i].value === mainSortedData[i+1].value){
+        let duplicate = mainSortedData[i].value;
+        duplicateRank.push(i + 1);
+        for (let j = i + 1; j < data.length; j++) {
+          if (duplicate === mainSortedData[j].value) {
+            duplicateRank.push(j + 1);
+          }
+        }
+  
+        i += duplicateRank.length;
+      }
+      
+  
+      if (duplicateRank.length > 0){
+        const sum = duplicateRank.reduce((acc, val) => acc + val, 0);
+        const n = duplicateRank.length;
+        let average = sum/n;
+  
+        for (let i = 0; i < duplicateRank.length; i++) {
+          duplicateRank[i] = average;
+        }
+  
+        const len = duplicateRank.length;
+  
+        for (let i = 0; i < len; i++) {
+          rankData.push(duplicateRank.pop());
+        }
+      }
+  
+  
+      if (mainSortedData[i].value !== mainSortedData[i+1].value && i < data.length) {
+        rankData.push(i + 1);
+        dataArray.push(mainSortedData[i].value);
+      } else if (mainSortedData[i].value === mainSortedData[i+1].value) {
+        i--;
+      }
+    }
+    
+    let rankedData = [];
+    for (let h = 0; h < data.length; h++) {
+      rankedData[mainSortedData[h].index] = rankData[h];
+    }
+    return rankedData;
+  }
+  </pre></code></p>`;
+
+  formula.innerHTML += '<p>To calculate the spearman rank correlation coefficient:</p>';
+  formula.innerHTML += 'The provided JavaScript function calculates the Spearman rank correlation coefficient for two sets of data points, considering the presence of duplicates. In the absence of duplicates, it ranks the data, computes differences between corresponding ranks, and applies the Spearman formula to obtain the correlation coefficient. Additional information, including ranked data, differences, and squared differences, is returned. In the presence of duplicates, the function calculates mean ranks and performs modified Spearman calculations, returning a variety of intermediate results such as mean ranks, differences from mean ranks, and products of differences. The function limits the computed Spearman rank to three decimal places and provides a comprehensive set of outputs for both scenarios to aid in result interpretation and debugging.';
+  formula.innerHTML += '<p>Expressed in javascript:</p>';
+  formula.innerHTML += `<p><code><pre>
+  function spearmanRank(xData, yData) {
+    const duplicatesChecker = hasDuplicates(xData) || hasDuplicates(yData);
+  
     const n = xData.length;
+    if (duplicatesChecker === false){
+      const xRankData = rank(xData); const yRankData = rank(yData); const diData = [];
   
-    const xSquaredDividedByN = summationX ** 2 / n;
-    const ySquaredDividedByN = summationY ** 2 / n;
+      for (let i = 0; i < n; i += 1) {
+        diData[i] = xRankData[i] - yRankData[i];
+      }
+      const diSquaredData = diData.map((num) => num ** 2);
+      const diSquaredSummation = diSquaredData.reduce((acc, val) => acc + val, 0);
+      const spearmanRank = 1 - ((6 * diSquaredSummation) / (n * ((n ** 2) - 1)));
   
-    const denominator = Math.sqrt(
-      (summationXSquared - xSquaredDividedByN) * (summationYSquared - ySquaredDividedByN),
-    );
-    const numerator = summationXY - ((summationX * summationY) / n);
-    const simpleCorrelation = numerator / denominator;
-    return limitDecimalPoints(simpleCorrelation, 3);
+      return {
+        computedValue: limitDecimalPoints(spearmanRank, 3), 
+        xRankData: xRankData, 
+        yRankData: yRankData,
+        diData: diData,
+        diSquaredData: diSquaredData,
+        diSquaredSummation: diSquaredSummation,
+      };
+    } else {
+      const xRankData = rank(xData); const yRankData = rank(yData);
+      const MRx = xRankData.reduce((acc, val) => acc + val, 0) / n;
+      const MRy = yRankData.reduce((acc, val) => acc + val, 0) / n;
+      let RxMinusMrxData = []; RyMinusMryData = []; ProductData = []; RxMinusMRxRaiseTo2Data = []; RyMinusMRyRaiseTo2Data = [];
+      for (let i = 0; i < n; i++) {
+        RxMinusMrxData[i] = xRankData[i] - MRx;
+        RyMinusMryData[i] = yRankData[i] - MRy;
+        ProductData[i] = RxMinusMrxData[i] * RyMinusMryData[i];
+        RxMinusMRxRaiseTo2Data[i] = RxMinusMrxData[i] ** 2;
+        RyMinusMRyRaiseTo2Data[i] = RyMinusMryData[i] ** 2;
+      }
+  
+      const SummationOfProductData = ProductData.reduce((acc, val) => acc + val, 0);
+      const SummationOfRxMinusMRxRaiseTo2Data = RxMinusMRxRaiseTo2Data.reduce((acc, val) => acc + val, 0);
+      const SummationOfRyMinusMRyRaiseTo2Data = RyMinusMRyRaiseTo2Data.reduce((acc, val) => acc + val, 0);
+  
+      const spearmanRank = SummationOfProductData / (Math.sqrt(SummationOfRxMinusMRxRaiseTo2Data * SummationOfRyMinusMRyRaiseTo2Data))
+  
+      return {
+        computedValue: limitDecimalPoints(spearmanRank, 3), 
+        xRankData: xRankData, 
+        yRankData: yRankData,
+        MRx: MRx,
+        MRy: MRy,
+        RxMinusMrxData: RxMinusMrxData,
+        RyMinusMryData: RyMinusMryData,
+        ProductData: ProductData,
+        RxMinusMRxRaiseTo2Data: RxMinusMRxRaiseTo2Data,
+        RyMinusMRyRaiseTo2Data: RyMinusMRyRaiseTo2Data,
+        SummationOfProductData: SummationOfProductData,
+        SummationOfRxMinusMRxRaiseTo2Data: SummationOfRxMinusMRxRaiseTo2Data,
+        SummationOfRyMinusMRyRaiseTo2Data: SummationOfRyMinusMRyRaiseTo2Data
+      };
+    }
   }
   </pre></code></p>`;
 
   main.append(headerTt, overview, form, tableContainer, formula);
 }
+
+
+// ung input
+// 

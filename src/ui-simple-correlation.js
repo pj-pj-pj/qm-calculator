@@ -21,6 +21,7 @@ function checkIfNumberOrComma(e) {
 function displayResults(x, y, labels) {
   const correlation = calculateSimpleCorrelation(x, y);
   const correlationLabel = getFinalLabel(correlation);
+  
   const p = document.createElement('p');
   p.textContent = `Result: ${correlation}, ${correlationLabel}`;
 

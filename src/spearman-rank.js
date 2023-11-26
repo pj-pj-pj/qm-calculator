@@ -65,7 +65,7 @@ function rank(data) {
   return rankedData;
 }
 
-function calculateSpearmanRank(xData, yData) {
+function spearmanRank(xData, yData) {
   const duplicatesChecker = hasDuplicates(xData) || hasDuplicates(yData);
 
   const n = xData.length;
@@ -79,12 +79,19 @@ function calculateSpearmanRank(xData, yData) {
     const diSquaredSummation = diSquaredData.reduce((acc, val) => acc + val, 0);
     const spearmanRank = 1 - ((6 * diSquaredSummation) / (n * ((n ** 2) - 1)));
 
-    return limitDecimalPoints(spearmanRank, 3);
+    return {
+      computedValue: limitDecimalPoints(spearmanRank, 3), 
+      xRankData: xRankData, 
+      yRankData: yRankData,
+      diData: diData,
+      diSquaredData: diSquaredData,
+      diSquaredSummation: diSquaredSummation,
+    };
   } else {
     const xRankData = rank(xData); const yRankData = rank(yData);
     const MRx = xRankData.reduce((acc, val) => acc + val, 0) / n;
     const MRy = yRankData.reduce((acc, val) => acc + val, 0) / n;
-    let RxMinusMrxData = []; RyMinusMryData = []; ProductData = []; RaiseTo2Data = []; RxMinusMRxRaiseTo2Data = []; RyMinusMRyRaiseTo2Data = [];
+    let RxMinusMrxData = []; RyMinusMryData = []; ProductData = []; RxMinusMRxRaiseTo2Data = []; RyMinusMRyRaiseTo2Data = [];
     for (let i = 0; i < n; i++) {
       RxMinusMrxData[i] = xRankData[i] - MRx;
       RyMinusMryData[i] = yRankData[i] - MRy;
@@ -99,7 +106,21 @@ function calculateSpearmanRank(xData, yData) {
 
     const spearmanRank = SummationOfProductData / (Math.sqrt(SummationOfRxMinusMRxRaiseTo2Data * SummationOfRyMinusMRyRaiseTo2Data))
 
-    return limitDecimalPoints(spearmanRank, 3);
+    return {
+      computedValue: limitDecimalPoints(spearmanRank, 3), 
+      xRankData: xRankData, 
+      yRankData: yRankData,
+      MRx: MRx,
+      MRy: MRy,
+      RxMinusMrxData: RxMinusMrxData,
+      RyMinusMryData: RyMinusMryData,
+      ProductData: ProductData,
+      RxMinusMRxRaiseTo2Data: RxMinusMRxRaiseTo2Data,
+      RyMinusMRyRaiseTo2Data: RyMinusMRyRaiseTo2Data,
+      SummationOfProductData: SummationOfProductData,
+      SummationOfRxMinusMRxRaiseTo2Data: SummationOfRxMinusMRxRaiseTo2Data,
+      SummationOfRyMinusMRyRaiseTo2Data: SummationOfRyMinusMRyRaiseTo2Data
+    };
   }
 }
 
@@ -108,4 +129,4 @@ function hasDuplicates(arr) {
 }
 
 
-module.exports = { rank, calculateSpearmanRank };
+module.exports = { rank, spearmanRank, hasDuplicates };

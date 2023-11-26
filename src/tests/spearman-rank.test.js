@@ -1,4 +1,4 @@
-const { rank, calculateSpearmanRank } = require('../spearman-rank');
+const { rank, spearmanRank } = require('../spearman-rank');
 
 test('testing rank function (numerical)', () => {
   const data = [8,16,10,3,17];
@@ -13,11 +13,11 @@ test('testing rank function (ordinal)', () => {
 test('testing calculateSpearmanRank function', () => {
   const xData = [7,15,12,5,13,10,4,3];
   const yData = [8,10,19,4,15,23,12,14];
-  expect(calculateSpearmanRank(xData,yData)).toBe(0.238)
+  expect(spearmanRank(xData,yData).computedValue).toBe(0.238)
 })
 
 test('testing calculateSpearmanRank function with duplicate ranks', () => {
   const xData = ['University', 'University', 'Secondary', 'Secondary', 'Preparatory', 'Nursery', 'Illiterate'];
   const yData = [8, 60, 10, 15, 25, 10, 50];
-  expect(calculateSpearmanRank(xData,yData)).toBe(-0.174)
+  expect(spearmanRank(xData,yData).computedValue).toBe(-0.174)
 })

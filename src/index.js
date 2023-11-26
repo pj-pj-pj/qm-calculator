@@ -2,6 +2,7 @@
 import fdtuUIinit from './ui-freq-dist';
 import skewnessInit from './ui-skewness';
 import simpCorreUIinit from './ui-simple-correlation';
+import spearmanUIinit from './ui-spearman-rank';
 
 // for the responsive sidebar, show on click then hide
 const menuBtn = document.querySelector('nav #nav-button');
@@ -53,3 +54,4 @@ sidebarsBtn.forEach((btn) => {
 sidebarsBtn[0].addEventListener('click', fdtuUIinit);
 sidebarsBtn[1].addEventListener('click', skewnessInit);
 sidebarsBtn[2].addEventListener('click', simpCorreUIinit);
+sidebarsBtn[3].addEventListener('click', spearmanUIinit);
