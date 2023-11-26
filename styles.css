@@ -40,6 +40,7 @@ footer {
 	left: 0;
 	bottom: 0;
 	background-color: var(--darker-color);
+	font-size: 11px;
 }
 
 footer a {
