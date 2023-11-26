@@ -35,7 +35,15 @@ footer {
 	width: 100%;
 	text-align: center;
 	margin-top: auto;
-	padding-bottom: 2%;
+	padding: 2% 0;
+	position: fixed;
+	left: 0;
+	bottom: 0;
+	background-color: var(--darker-color);
+}
+
+footer a {
+	color: var(--highlight);
 }
 
 header,
