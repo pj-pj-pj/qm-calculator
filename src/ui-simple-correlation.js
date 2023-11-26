@@ -21,7 +21,7 @@ function checkIfNumberOrComma(e) {
 function displayResults(x, y, labels) {
   const correlation = calculateSimpleCorrelation(x, y);
   const correlationLabel = getFinalLabel(correlation);
-  
+
   const p = document.createElement('p');
   p.textContent = `Result: ${correlation}, ${correlationLabel}`;
 
@@ -34,17 +34,46 @@ function displayResults(x, y, labels) {
     headerRow.appendChild(th);
   });
 
+  let xTotal = 0;
+  let yTotal = 0;
+  let xSquaredTotal = 0;
+  let ySquaredTotal = 0;
+  let xyTotal = 0;
+
   for (let i = 0; i < x.length; i += 1) {
     const row = table.insertRow();
 
     // x
     const xCell = row.insertCell();
     xCell.textContent = x[i];
+    xTotal += x[i];
 
     // y
     const yCell = row.insertCell();
     yCell.textContent = y[i];
+    yTotal += y[i];
+
+    const xSquared = row.insertCell();
+    xSquared.textContent = x[i] ** 2;
+    xSquaredTotal += x[i] ** 2;
+
+    const ySquared = row.insertCell();
+    ySquared.textContent = y[i] ** 2;
+    ySquaredTotal += y[i] ** 2;
+
+    // xMultipliedToY
+    const xy = row.insertCell();
+    xy.textContent = x[i] * y[i];
+    xyTotal += x[i] * y[i];
   }
+
+  // totals
+  const row = table.insertRow();
+  row.insertCell().textContent = `∑X = ${xTotal}`;
+  row.insertCell().textContent = `∑Y = ${yTotal}`;
+  row.insertCell().textContent = `∑X² = ${xSquaredTotal}`;
+  row.insertCell().textContent = `∑Y² = ${ySquaredTotal}`;
+  row.insertCell().textContent = `∑XY = ${xyTotal}`;
 
   tableContainer.append(p, table);
 }
@@ -124,7 +153,7 @@ function frqDistUngrFormInit(form) {
         .split(',')
         .filter((value) => value.trim() !== '') // Filter out empty values
         .map(Number);
-      const dataLabels = [xLabelInput.value, yLabelInput.value];
+      const dataLabels = [xLabelInput.value, yLabelInput.value, 'X²', 'Y²', 'XY'];
       displayResults(xdata, ydata, dataLabels);
       warningMsg.style.display = 'none';
 
