@@ -165,7 +165,8 @@ main h3 {
 #frq-dist-u-form,
 #skewness-form,
 #simple-corre-form,
-#spearman-rank-form {
+#spearman-rank-form,
+#linear-regression-form {
 	display: grid;
 
 	gap: 8px;
@@ -178,7 +179,9 @@ main h3 {
 #simple-corre-form label:nth-child(2) input,
 #simple-corre-form label:nth-child(4) input,
 #spearman-rank-form label:nth-child(2) input,
-#spearman-rank-form label:nth-child(4) input {
+#spearman-rank-form label:nth-child(4) input,
+#linear-regression-form label:nth-child(2) input,
+#linear-regression-form label:nth-child(4) input {
 	width: 100%;
 }
 
@@ -196,7 +199,8 @@ main h3 {
 #frq-dist-u-form input,
 #skewness-form input,
 #simple-corre-form input,
-#spearman-rank-form input {
+#spearman-rank-form input,
+#linear-regression-form input {
 	padding: 8px 4px;
 	border-radius: 2px;
 	border: 1px solid var(--border-color);
@@ -208,21 +212,24 @@ main h3 {
 #frq-dist-u-form input:hover,
 #skewness-form input:hover,
 #simple-corre-form input:hover,
-#spearman-rank-form input:hover {
+#spearman-rank-form input:hover,
+#linear-regression-form input:hover {
 	border-color: var(--border-color-hover);
 }
 
 #frq-dist-u-form input:focus,
 #skewness-form input:focus,
 #simple-corre-form input:focus,
-#spearman-rank-form input:focus {
+#spearman-rank-form input:focus,
+#linear-regression-form input:focus {
 	outline: 1px solid var(--highlight);
 }
 
 #frq-dist-u-form button,
 #skewness-form button,
 #simple-corre-form button,
-#spearman-rank-form button {
+#spearman-rank-form button,
+#linear-regression-form button {
 	display: block;
 	width: 220px;
 	text-align: center;
@@ -235,21 +242,24 @@ main h3 {
 #frq-dist-u-form button:hover,
 #skewness-form button:hover,
 #simple-corre-form button:hover,
-#spearman-rank-form button:hover {
+#spearman-rank-form button:hover,
+#linear-regression-form button:hover {
 	border-color: var(--border-color-hover);
 }
 
 #frq-dist-u-form button:active,
 #skewness-form button:active,
 #simple-corre-form button:active,
-#spearman-rank-form button:active {
+#spearman-rank-form button:active,
+#linear-regression-form button:active {
 	filter: brightness(0.7);
 }
 
 #frq-dist-u-table,
 #skewness-result-container,
 #simple-corre-table,
-#spearman-rank-table {
+#spearman-rank-table,
+#linear-regression-table {
 	overflow: auto;
 	margin: 0 auto;
 	margin-bottom: 35px;
@@ -257,7 +267,8 @@ main h3 {
 
 #frq-dist-u-table table,
 #simple-corre-table table,
-#spearman-rank-table table {
+#spearman-rank-table table,
+#linear-regression-table table{
 	margin: 0 auto;
 	border-spacing: 0;
 	border: 1px solid var(--border-color);
