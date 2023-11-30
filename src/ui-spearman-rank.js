@@ -1,5 +1,3 @@
-//under construction
-
 import { unchild } from './index';
 import { getFinalLabel } from './simple-correlation-coefficient';
 import { spearmanRank,  hasDuplicates } from './spearman-rank';

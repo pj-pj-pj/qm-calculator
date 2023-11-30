@@ -1,5 +1,3 @@
-//under construction
-
 import { unchild } from './index';
 import { linearRegression } from './linear-regression';
 
