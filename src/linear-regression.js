@@ -1,4 +1,4 @@
-const { limitDecimalPoints, getMean } = require('./mean-median-mode');
+const { limitDecimalPoints } = require('./mean-median-mode');
 
 function linearRegression(xData, yData) {
   const summationX = xData.reduce((acc, val) => acc + val, 0);

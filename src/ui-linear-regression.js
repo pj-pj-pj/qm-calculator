@@ -20,7 +20,7 @@ function displayResults(x, y, givendata, labels) {
   const linearRegValues = linearRegression(x, y);
   const a = linearRegValues.a;
   const b = linearRegValues.b;
-  const mainEquation = `${a} - ${b}x`;
+  const mainEquation = `Y = ${a} - ${b}x`;
 
   const p = document.createElement('p');
   p.textContent = `Linear Equation: ${mainEquation}`;

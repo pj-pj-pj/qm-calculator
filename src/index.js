@@ -4,6 +4,7 @@ import skewnessInit from './ui-skewness';
 import simpCorreUIinit from './ui-simple-correlation';
 import spearmanUIinit from './ui-spearman-rank';
 import linearRegUIinit from './ui-linear-regression';
+import hypoTestingUIinit from './ui-hypothesis-testing';
 
 // for the responsive sidebar, show on click then hide
 const menuBtn = document.querySelector('nav #nav-button');
@@ -57,3 +58,5 @@ sidebarsBtn[1].addEventListener('click', skewnessInit);
 sidebarsBtn[2].addEventListener('click', simpCorreUIinit);
 sidebarsBtn[3].addEventListener('click', spearmanUIinit);
 sidebarsBtn[4].addEventListener('click', linearRegUIinit);
+//sidebarsBtn[5].addEventListener('click', ); para sa confidence interval
+sidebarsBtn[6].addEventListener('click', hypoTestingUIinit);
