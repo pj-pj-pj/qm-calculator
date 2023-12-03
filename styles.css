@@ -170,12 +170,13 @@ main h3 {
 	font-weight: normal;
 }
 
-/* FREQ-DIST-UNGROUPED / SKEWNESS / SIMPLE-CORRELATION */
+/* FREQ-DIST-UNGROUPED / SKEWNESS / SIMPLE-CORRELATION / SPEARMAN / LINEAR-REGRESSION / HYPOTHESIS_TESTING */
 #frq-dist-u-form,
 #skewness-form,
 #simple-corre-form,
 #spearman-rank-form,
-#linear-regression-form {
+#linear-regression-form,
+#hypothesis-testing-form {
 	display: grid;
 
 	gap: 8px;
@@ -209,7 +210,8 @@ main h3 {
 #skewness-form input,
 #simple-corre-form input,
 #spearman-rank-form input,
-#linear-regression-form input {
+#linear-regression-form input,
+#hypothesis-testing-form input {
 	padding: 8px 4px;
 	border-radius: 2px;
 	border: 1px solid var(--border-color);
@@ -217,12 +219,17 @@ main h3 {
 	background-color: transparent;
 	margin: 10px 0 0 0;
 }
+#hypothesis-testing-form input {
+  padding: none;
+  margin-left: 15px;
+}
 
 #frq-dist-u-form input:hover,
 #skewness-form input:hover,
 #simple-corre-form input:hover,
 #spearman-rank-form input:hover,
-#linear-regression-form input:hover {
+#linear-regression-form input:hover,
+#hypothesis-testing-form input:hover {
 	border-color: var(--border-color-hover);
 }
 
@@ -230,7 +237,8 @@ main h3 {
 #skewness-form input:focus,
 #simple-corre-form input:focus,
 #spearman-rank-form input:focus,
-#linear-regression-form input:focus {
+#linear-regression-form input:focus,
+#hypothesis-testing-form input:focus {
 	outline: 1px solid var(--highlight);
 }
 
@@ -238,7 +246,8 @@ main h3 {
 #skewness-form button,
 #simple-corre-form button,
 #spearman-rank-form button,
-#linear-regression-form button {
+#linear-regression-form button,
+#hypothesis-testing-form button {
 	display: block;
 	width: 220px;
 	text-align: center;
@@ -252,7 +261,8 @@ main h3 {
 #skewness-form button:hover,
 #simple-corre-form button:hover,
 #spearman-rank-form button:hover,
-#linear-regression-form button:hover {
+#linear-regression-form button:hover,
+#hypothesis-testing-form button:hover {
 	border-color: var(--border-color-hover);
 }
 
@@ -260,7 +270,8 @@ main h3 {
 #skewness-form button:active,
 #simple-corre-form button:active,
 #spearman-rank-form button:active,
-#linear-regression-form button:active {
+#linear-regression-form button:active,
+#hypothesis-testing-form button:active {
 	filter: brightness(0.7);
 }
 
@@ -304,6 +315,102 @@ pre {
 	word-wrap: break-word;
 }
 
+#hypothesis-testing-container {
+  font-size: large;
+  margin-bottom: 40px;
+}
+
+.displayInline {
+  display: inline-block;
+}
+
+/* DROPDOWN BUTTONS */
+.dropdown {
+  display: inline-block;
+  width: 75px;
+  position: relative;
+  margin-left: 1em;
+}
+
+.dropdown * {
+  box-sizing: border-box;
+}
+
+.select {
+  background: #2a2f3b;
+  color: #fff;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border: 2px #2a2f3b solid;
+  border-radius: 0.5em;
+  padding: 0.5em;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.select-clicked {
+  border: 2px #26489a solid;
+  box-shadow: 0 0 0.8em #26489a;
+}
+
+.select:hover {
+  background: #323741;
+}
+
+.caret {
+  width: 0;
+  height: 0;
+  border-left: 5px solid transparent;
+  border-right: 5px solid transparent;
+  border-top: 6px solid #fff;
+  transition: 0.3s;
+}
+
+.caret-rotate {
+  transform: rotate(180deg);
+}
+
+.menu {
+  display: none;
+  list-style: none;
+  padding: 0.2em 0.5em;
+  background: #323741;
+  border: 1px #363a43 solid;
+  box-shadow: 0 0.5em  1em rgba(0, 0, 0, 0.2);
+  border-radius: 0.5em;
+  color: #9fa5b5;
+  position: absolute;
+  top: 3em;
+  left: 50%;
+  width: 100%;
+  transform: translateX(-50%);
+  opacity: 0;
+  transition: 0.2s;
+  z-index: 1;
+}
+
+.menu li {
+  padding: 0.7em 0.5em;
+  margin: 0.3em 0;
+  border-radius: 0.5em;
+  cursor: pointer;
+}
+
+.menu li:hover {
+  background: #2a2d35;
+}
+
+.active {
+  background: #23242a;
+}
+
+.menu-open {
+  display: block;
+  opacity: 1;
+}
+
+/* @media css */
 @media only screen and (min-width: 960px) {
 	body {
 		display: grid;
