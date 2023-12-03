@@ -7,7 +7,7 @@ container.id = 'hypothesis-testing-container';
 
 function checkIfNumber(e) {
   const { key } = e;
-  if ((key >= '0' && key <= '9')) {
+  if ((key >= '0' && key <= '9') || key === '.') {
     return true;
   }
   e.preventDefault();
