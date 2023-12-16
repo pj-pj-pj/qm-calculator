@@ -1,5 +1,6 @@
 import { unchild } from './index';
 import { linearRegression } from './linear-regression';
+const { limitDecimalPoints } = require('./mean-median-mode');
 
 const main = document.querySelector('main');
 const tableContainer = document.createElement('div');
@@ -20,7 +21,8 @@ function displayResults(x, y, givendata, labels) {
   const linearRegValues = linearRegression(x, y);
   const a = linearRegValues.a;
   const b = linearRegValues.b;
-  const mainEquation = `Y = ${a} - ${b}x`;
+  let sign = Math.sign(b) === 1 ? '+' : Math.sign(b) === -1 ? '-' : '0';
+  const mainEquation = `Y = ${a} ${sign} ${b}x`;
 
   const p = document.createElement('p');
   p.textContent = `Linear Equation: ${mainEquation}`;
@@ -78,7 +80,7 @@ function displayResults(x, y, givendata, labels) {
     const row = tablePredValues.insertRow();
 
     const givenDataCell = row.insertCell(); givenDataCell.textContent = givendata[i];
-    const predictedDataCell = row.insertCell(); predictedDataCell.textContent = computedPredictedData[i];
+    const predictedDataCell = row.insertCell(); predictedDataCell.textContent = limitDecimalPoints(computedPredictedData[i], 3);
   }
 
   tableContainer.append(p, table, p2, tablePredValues);
@@ -190,11 +192,6 @@ function linearRegFormInit(form) {
       displayResults(xdata, ydata, givendata, dataLabels);
       warningMsg.style.display = 'none';
 
-      xdatasetInput.value = '';
-      ydatasetInput.value = '';
-      xLabelInput.value = 'X';
-      yLabelInput.value = 'Y';
-      givenValueInput.value = '';
     }
   });
 

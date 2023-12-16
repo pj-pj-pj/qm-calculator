@@ -7,14 +7,14 @@ function linearRegression(xData, yData) {
   const xyData = []; const xSquaredData = []; const
     ySquaredData = [];
   for (let i = 0; i < xData.length; i += 1) {
-    xyData[i] = xData[i] * yData[i];
-    xSquaredData[i] = xData[i] ** 2;
-    ySquaredData[i] = yData[i] ** 2;
+    xyData[i] = limitDecimalPoints(xData[i] * yData[i], 3);
+    xSquaredData[i] = limitDecimalPoints(xData[i] ** 2, 3);
+    ySquaredData[i] = limitDecimalPoints(yData[i] ** 2, 3);
   }
 
-  const summationXY = xyData.reduce((acc, val) => acc + val, 0);
-  const summationXSquared = xSquaredData.reduce((acc, val) => acc + val, 0);
-  const summationYSquared = ySquaredData.reduce((acc, val) => acc + val, 0);
+  const summationXY = limitDecimalPoints(xyData.reduce((acc, val) => acc + val, 0), 3);
+  const summationXSquared = limitDecimalPoints(xSquaredData.reduce((acc, val) => acc + val, 0), 3);
+  const summationYSquared = limitDecimalPoints(ySquaredData.reduce((acc, val) => acc + val, 0), 3);
   const n = xData.length;
 
   const xMean = limitDecimalPoints(summationX/n,3);
