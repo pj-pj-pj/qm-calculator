@@ -22,7 +22,7 @@ function displayResults(x, y, givendata, labels) {
   const a = linearRegValues.a;
   const b = linearRegValues.b;
   let sign = Math.sign(b) === 1 ? '+' : Math.sign(b) === -1 ? '-' : '0';
-  const mainEquation = `Y = ${a} ${sign} ${b}x`;
+  const mainEquation = `Y = ${a} ${sign} ${Math.abs(b)}x`;
 
   const p = document.createElement('p');
   p.textContent = `Linear Equation: ${mainEquation}`;

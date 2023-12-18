@@ -32,7 +32,7 @@ function hypothesisTesting(parameter, operator, valueReference, n, sampleMean, p
     }
     claim = altHypo;
   }
-  const z = limitDecimalPoints(((sampleMean - populationMean) / (sd / Math.sqrt(n))), 2);
+  const z = limitDecimalPoints(((sampleMean - populationMean) / (sd / limitDecimalPoints(Math.sqrt(n), 3))), 2);
   const zc = limitDecimalPoints((stats.erf(z / Math.sqrt(2)) / 2 + 0.5), 4);
 
   let PValue;

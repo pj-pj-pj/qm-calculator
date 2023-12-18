@@ -8,8 +8,8 @@
 		"editor.formatOnSave": false
 	},
 	"editor.codeActionsOnSave": {
-		"source.fixAll": true
-	},
+    "source.fixAll": "explicit"
+  },
 	"eslint.validate": ["javascript"],
 	"prettier.useTabs": true,
 	"prettier.jsxSingleQuote": false,
